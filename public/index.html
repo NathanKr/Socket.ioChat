@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<head>
+   <meta charset="UTF-8">
+   <title>Chat App</title>
+</head>
+<body>
+   <h2>Welcome to the chat app !!! </h2>
+   <script src="/socket.io/socket.io.js"></script>
+   <script>
+       var socket = io();   
+       socket.on('connect' , () => {
+           console.log('client connected to server');
+           socket.emit('createEmail',{ from: "jj@gmail.com",subject: "subject 2"});
+        });
+       socket.on('disconnect' , () => console.log('socket disconnected'));
+       socket.on('newEmail', data => console.log("got newEmail event from server : ",data));
+   </script>
+</body>
+</html>
+
+
