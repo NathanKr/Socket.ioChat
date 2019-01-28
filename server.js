@@ -12,18 +12,28 @@ const io = socketIo(server);
 io.on("connect", socket => {
   console.log("server got new connection");
 
-  // --- fire custom event
-  socket.emit("newEmail", {
-    from: "jj@gmail.com",
-    subject: "subject 1"
+  // --- fire event
+  /*socket.emit("newMessage", {
+    from: "server",
+    text: "from server ",
+    createdAt: Date.now()
+  });*/
+
+  // --- respond to createMessage event from client
+  socket.on("createMessage", ({ from, text }) => {
+    console.log(
+      `got event from client createMessage. from : ${from} , text : ${text}`
+    );
+
+    // --- broadcast : send to all 
+    io.emit("newMessage", {
+      from,
+      text,
+      createdAt: Date.now()
+    });
   });
 
-  // --- respond to createEmail event from client
-  socket.on("createEmail", data =>
-    console.log("server got createEmail event from the client : ", data)
-  );
-
-  // --- respond to disconnect after client is closed 
+  // --- respond to disconnect after client is closed
   socket.on("disconnect", () => console.log("client disconnected"));
 });
 
