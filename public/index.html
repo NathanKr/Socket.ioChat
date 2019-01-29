@@ -4,26 +4,39 @@
    <title>Chat App</title>
 </head>
 <body>
-   <h2>Welcome to the chat app !!! </h2>
+   <h2>Welcome to the chat app</h2>
    <script src="/socket.io/socket.io.js"></script>
-   <script>
-       var socket = io();   
+   <script src="index.js"></script>
 
-       socket.on('connect' , () => {
-           console.log('client connected to server');
-           // --- fire event
-           socket.emit(
-              'createMessage',
-           { from: "client",text: "from client"},
-           ackData => console.log("got ack from server : ", ackData));
-        });
+   <div id='joinRoom'>
+      <form onsubmit="handleJoinRoom(event)">
+         <select id='selectRoom'>
+            <option value="React">React course</option>
+            <option value="Node">Node course</option>
+          </select>
+          <br/><br/>
+         <input type="submit" value="Join Room"/>
+         <br/><br/><br/>
+      </form>
+   </div>
 
-        socket.on('newMessage', message => {
-         console.log("got newMessage event from server : ",message);
-        });
 
-       socket.on('disconnect' , () => console.log('socket disconnected'));
-   </script>
+   <div id='room'>
+      Room : <label id='roomName'></label><br/>
+      Messages
+      <ol id='messages'>
+   
+      </ol>
+      <form onsubmit="submitMessageHandler(event)">
+         From <br/>
+         <input id='from' type="text" value="Nathan"/>
+         <br/><br/>
+         Text <br/>
+         <input id='text' type="text" value="Hi everyone"/>
+         <br/><br/>
+         <input type="submit" value="Send"/>
+      </form>
+   </div>
 </body>
 </html>
 
