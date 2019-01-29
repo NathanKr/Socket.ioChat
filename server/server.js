@@ -6,7 +6,7 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const path = require("path");
-let selectedRoom ;
+let selectedRoom;
 
 app.use(express.static(path.join(__dirname, "../") + "/public"));
 
@@ -24,16 +24,18 @@ io.on("connect", socket => {
   );
 
   // --- send on connect to all beside this client
-  socket.broadcast.to(selectedRoom).emit(
-    newMessage,
-    utils.createMessage(admin, "New user entered the chat room")
-  );
+  socket.broadcast
+    //.to(selectedRoom) , not needed because we have join on socket
+    .emit(
+      newMessage,
+      utils.createMessage(admin, "New user entered the chat room")
+    );
 
   // --- espond to joinRoom event from client
   socket.on("joinRoom", ({ room }, ackCallback) => {
     console.log(`got event from client joinRoom. room : ${room}`);
     selectedRoom = room;
-    socket.join(room); // --- this socket is attached to room
+    socket.join(selectedRoom); // --- this socket is attached to room
 
     ackCallback("this is server ack");
   });
@@ -45,7 +47,9 @@ io.on("connect", socket => {
     );
 
     // --- send to all client beside the one that send it
-    socket.broadcast.to(selectedRoom).emit(newMessage, { from, text });
+    socket.broadcast.
+    //to(selectedRoom).  not needed because we have join on socket
+    emit(newMessage, { from, text });
     ackCallback("this is server ack");
 
     // --- send to all clients including your self
@@ -67,10 +71,12 @@ io.on("connect", socket => {
   // --- respond to disconnect after client is closed
   socket.on("disconnect", () => {
     // --- send on connect to all beside this client
-    socket.broadcast.to(selectedRoom).emit(
-      newMessage,
-      utils.createMessage(admin, "User has exit the chat room")
-    );
+    socket.broadcast
+     // .to(selectedRoom) , not needed because we have join on socket
+      .emit(
+        newMessage,
+        utils.createMessage(admin, "User has exit the chat room")
+      );
   });
 });
 
