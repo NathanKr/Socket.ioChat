@@ -1,8 +1,10 @@
 let socket = io();
 
+window.onload = () => (document.getElementById("room").style.display = "none");
+
 socket.on("connect", () => {
   console.log("client connected to server");
- });
+});
 
 socket.on("newMessage", ({ text, from }) => {
   console.log("got newMessage event from server : ", text, from);
@@ -29,6 +31,7 @@ const handleJoinRoom = event => {
       console.log("got ack from server : ", ackData);
       document.getElementById("roomName").innerText = selectedRoom;
       document.getElementById("joinRoom").style.display = "none";
+      document.getElementById("room").style.display = "block";
     }
   );
 };
