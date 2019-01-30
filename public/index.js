@@ -2,13 +2,7 @@ let socket = io();
 
 socket.on("connect", () => {
   console.log("client connected to server");
-  // --- fire event
-  /*socket.emit(
-    "createMessage",
-    { from: "client", text: "from client" },
-    ackData => console.log("got ack from server : ", ackData)
-  );*/
-});
+ });
 
 socket.on("newMessage", ({ text, from }) => {
   console.log("got newMessage event from server : ", text, from);
