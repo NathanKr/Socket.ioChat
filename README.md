@@ -2,11 +2,15 @@
 Chat rooms using socket.io
 
 <h2>Server</h2>
-Node.js
+<ul>
+<li>Node.js</li>
+<li>invoke using npm start from root</li>
+</ul>
 
 <h2>Client</h2>
 <ul>
 <li>Browser - vanilla JS</li>
+<li>add http://localhost:3000/ to browser address bar</li>
 <li>View</li>
 <ul>
 <li>choose chat room</li>
@@ -77,7 +81,8 @@ Node.js
 <h2>Future</h2>
 <ul>
 <li>Add styling</li>
-<li>Add authentication</li>
+<li>Add authentication ??</li>
 <li>Add message time to messages view</li>
 <li>Add status + error description to ackCallback .client should respond accordingly </li>
+<li>Show list of all users in the chat (require storage e.g. file or db) 
 </ul>

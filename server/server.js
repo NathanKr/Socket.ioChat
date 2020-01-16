@@ -15,7 +15,7 @@ const { newMessage, admin , joinRoom , createMessage } = constants;
 
 // --- client was connected
 io.on("connect", socket => {
-  console.log("server got new connection");
+  console.log(`server got new connection. socket id : ${socket.id}`);
   // --- send on connect to this client
   socket.emit(
     newMessage,
@@ -28,7 +28,7 @@ io.on("connect", socket => {
     utils.createMessage(admin, "New user entered the chat room")
   );
 
-  // --- espond to joinRoom event from client
+  // --- respond to joinRoom event from client
   socket.on(joinRoom, ({ room }, ackCallback) => {
     console.log(`got event from client joinRoom. room : ${room}`);
     socket.join(room); // --- this socket is attached to room
